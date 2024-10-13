@@ -1,16 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import ProgressBar from "../components/ProgressBar";
-import InitialForm from "../components/InitialForm";
-import YesNoQuestion from "../components/YesNoQuestion";
-import MultipleChoiceQuestion from "../components/MultipleChoiceQuestion";
-import EndScreen from "../components/EndScreen";
-import { getSupabase } from '../lib/supabase';
+import ProgressBar from "@/components/ProgressBar";
+import InitialForm from "@/components/InitialForm";
+import YesNoQuestion from "@/components/YesNoQuestion";
+import MultipleChoiceQuestion from "@/components/MultipleChoiceQuestion";
+import EndScreen from "@/components/EndScreen";
+import { getSupabase } from '@/lib/supabase';
 import dynamic from 'next/dynamic';
 
 const DynamicSupabaseComponent = dynamic(
-  () => import('../components/SupabaseComponent'),
+  () => import('@/components/SupabaseComponent'),
   { ssr: false }
 );
 
@@ -69,11 +69,10 @@ export default function Home() {
         });
 
       if (error) {
-        if (error.code === '42501') {
-          throw new Error('Permission denied. Please check your Supabase RLS policies.');
-        }
         throw error;
       }
+
+      // HubSpot integration can be added here if needed
 
       console.log('Form submitted successfully:', data);
       setCurrentStep(6); // Move to the end screen

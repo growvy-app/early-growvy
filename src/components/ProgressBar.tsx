@@ -5,7 +5,7 @@ interface ProgressBarProps {
   totalSteps: number;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) => {
+const ProgressBar: React.FC<ProgressBarProps> = React.memo(({ currentStep, totalSteps }) => {
   const progress = (currentStep / (totalSteps - 1)) * 100;
 
   return (
@@ -16,6 +16,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
       ></div>
     </div>
   );
-};
+});
+
+ProgressBar.displayName = 'ProgressBar';
 
 export default ProgressBar;
