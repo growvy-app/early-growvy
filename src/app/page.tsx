@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import ProgressBar from "../components/ProgressBar";
 import InitialForm from "../components/InitialForm";
 import YesNoQuestion from "../components/YesNoQuestion";
@@ -18,7 +17,6 @@ export default function Home() {
     yesNoAnswer: null,
     multipleChoiceAnswers: ["", "", "", ""],
   });
-  const router = useRouter();
 
   useEffect(() => {
     const savedData = localStorage.getItem("formData");
@@ -46,7 +44,7 @@ export default function Home() {
   const handleSubmit = async () => {
     try {
       // Save to Supabase
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("survey_responses")
         .insert({
           email: formData.email,
