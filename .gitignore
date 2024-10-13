@@ -35,4 +35,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Environment files
+.env
 .env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Font files (optional, depending on your licensing)
+# src/app/fonts/*.ttf

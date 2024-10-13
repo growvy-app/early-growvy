@@ -1,47 +1,39 @@
 import React from "react";
 import { FormData } from "../app/page";
+import Button from "./Button";
 
 interface YesNoQuestionProps {
   updateFormData: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
   onNext: () => void;
   onBack: () => void;
+  onSubmit: (answer: boolean) => void;
 }
 
-const YesNoQuestion: React.FC<YesNoQuestionProps> = ({ updateFormData, onNext, onBack }) => {
+const YesNoQuestion: React.FC<YesNoQuestionProps> = ({ updateFormData, onNext, onBack, onSubmit }) => {
   const handleAnswer = (answer: boolean) => {
     updateFormData("yesNoAnswer", answer);
     if (answer) {
       onNext();
     } else {
-      // Skip to the end screen
-      onNext();
-      onNext();
-      onNext();
-      onNext();
-      onNext();
+      onSubmit(false);
     }
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-bold">Would you like to take our survey?</h2>
+    <div className="space-y-6">
+      <h2 className="title-gradient text-5xl font-bold mb-6">Want to Answer 4 Quick Questions for a Free 3-Month Pro Tier?</h2>
+      <p className="text-xl mb-8">Your insights are vital for us to create the best possible app for you. Help us understand your needs by answering these quick questions!</p>
       <div className="space-x-4">
-        <button
-          onClick={() => handleAnswer(true)}
-          className="bg-green-500 text-white px-4 py-2 rounded"
-        >
+        <Button onClick={() => handleAnswer(true)}>
           Yes
-        </button>
-        <button
-          onClick={() => handleAnswer(false)}
-          className="bg-red-500 text-white px-4 py-2 rounded"
-        >
+        </Button>
+        <Button onClick={() => handleAnswer(false)}>
           No
-        </button>
+        </Button>
       </div>
-      <button onClick={onBack} className="bg-gray-300 px-4 py-2 rounded">
+      <Button onClick={onBack}>
         Back
-      </button>
+      </Button>
     </div>
   );
 };

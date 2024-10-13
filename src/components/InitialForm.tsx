@@ -1,5 +1,7 @@
 import React from "react";
 import { FormData } from "../app/page";
+import Button from "./Button";
+import Input from "./Input";
 
 interface InitialFormProps {
   formData: FormData;
@@ -27,35 +29,41 @@ const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onN
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h1 className="text-2xl font-bold">Welcome to our Survey</h1>
-      <div>
-        <label htmlFor="email" className="block">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={formData.email}
-          onChange={(e) => updateFormData("email", e.target.value.trim())}
-          required
-          className="w-full p-2 border rounded"
-          maxLength={100}
-        />
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-md mx-auto">
+      <div className="space-y-1">
+        <h1 className="title-gradient text-6xl font-bold leading-[1.1]">
+          Be First and don't Miss Out.
+        </h1>
+        <p className="text-xl">Join the waiting list to be among the first to try out Growvy!</p>
       </div>
-      <div>
-        <label htmlFor="name" className="block">Name:</label>
-        <input
-          type="text"
+      <div className="space-y-4 flex flex-col gap-2">
+        <Input
           id="name"
+          label="First Name"
+          type="text"
           value={formData.name}
           onChange={(e) => updateFormData("name", e.target.value.trim())}
           required
-          className="w-full p-2 border rounded"
           maxLength={50}
+          placeholder="Fred"
+        />
+        <Input
+          id="email"
+          label="Email"
+          type="email"
+          value={formData.email}
+          onChange={(e) => updateFormData("email", e.target.value.trim())}
+          required
+          maxLength={100}
+          placeholder="fred@growvy.app"
         />
       </div>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-        Next
-      </button>
+      <Button 
+        type="submit" 
+        disabled={!isValidEmail(formData.email) || !isValidName(formData.name)}
+      >
+        Continue
+      </Button>
     </form>
   );
 };

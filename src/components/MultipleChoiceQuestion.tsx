@@ -1,5 +1,6 @@
 import React from "react";
 import { FormData } from "../app/page";
+import Button from "./Button";
 
 interface MultipleChoiceQuestionProps {
   questionNumber: number;
@@ -17,17 +18,17 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
   onBack,
 }) => {
   const questions = [
-    "What is your favorite color?",
-    "How often do you exercise?",
-    "What's your preferred mode of transportation?",
-    "How many hours of sleep do you get on average?",
+    "What inspires you to learn about business?",
+    "How would you describe your current business knowledge?",
+    "Do you believe learning more about business could benefit you?",
+    "What's your ideal investment for a pro tier subscription?",
   ];
 
   const options = [
-    ["Red", "Blue", "Green", "Yellow"],
-    ["Daily", "2-3 times a week", "Once a week", "Rarely"],
-    ["Car", "Public transport", "Bicycle", "Walking"],
-    ["Less than 6 hours", "6-7 hours", "7-8 hours", "More than 8 hours"],
+    ["I dream of creating my own business one day", "I want to advance my career", "I'm here to have fun and explore"],
+    ["Beginner – I'm just starting out", "Intermediate – I know some basics", "Advanced – I have strong business knowledge"],
+    ["Absolutely", "Not really", "I'm not sure yet"],
+    ["$5/month", "$8/month", "$12/month", "$16/month"],
   ];
 
   const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,31 +43,34 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-xl font-bold">{questions[questionNumber - 1]}</h2>
-      {options[questionNumber - 1].map((option, index) => (
-        <div key={index}>
-          <input
-            type="radio"
-            id={`option-${index}`}
-            name={`question-${questionNumber}`}
-            value={option}
-            checked={formData.multipleChoiceAnswers[questionNumber - 1] === option}
-            onChange={handleOptionChange}
-            required
-          />
-          <label htmlFor={`option-${index}`} className="ml-2">
-            {option}
-          </label>
-        </div>
-      ))}
-      <div className="space-x-4">
-        <button type="button" onClick={onBack} className="bg-gray-300 px-4 py-2 rounded">
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <h2 className="title-gradient text-5xl font-bold mb-8">{questions[questionNumber - 1]}</h2>
+      <div className="space-y-4">
+        {options[questionNumber - 1].map((option, index) => (
+          <div key={index} className="flex items-center">
+            <input
+              type="radio"
+              id={`option-${index}`}
+              name={`question-${questionNumber}`}
+              value={option}
+              checked={formData.multipleChoiceAnswers[questionNumber - 1] === option}
+              onChange={handleOptionChange}
+              required
+              className="mr-2"
+            />
+            <label htmlFor={`option-${index}`} className="text-lg">
+              {option}
+            </label>
+          </div>
+        ))}
+      </div>
+      <div className="flex space-x-4">
+        <Button onClick={onBack} type="button">
           Back
-        </button>
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+        </Button>
+        <Button type="submit">
           {questionNumber === 4 ? "Submit" : "Next"}
-        </button>
+        </Button>
       </div>
     </form>
   );

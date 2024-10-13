@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Afacad } from 'next/font/google';
 import "./globals.css";
-import ErrorBoundary from "@/components/ErrorBoundary";
+import dynamic from 'next/dynamic';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const DynamicErrorBoundary = dynamic(() => import('@/components/ErrorBoundary'), { ssr: false });
+
+const zainFont = localFont({
+  src: "./fonts/Zain-Regular.ttf",
+  variable: "--font-zain",
+  weight: "400",
+  display: "swap",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const afacad = Afacad({
+  subsets: ['latin'],
+  variable: '--font-afacad',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -27,11 +32,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${zainFont.variable} ${afacad.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
-        <ErrorBoundary>
-          {children}
-        </ErrorBoundary>
+        <DynamicErrorBoundary>
+          <main className="flex-grow flex flex-col">
+            {children}
+          </main>
+        </DynamicErrorBoundary>
       </body>
     </html>
   );

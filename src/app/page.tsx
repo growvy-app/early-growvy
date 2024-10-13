@@ -65,14 +65,12 @@ export default function Home() {
           email: formData.email,
           name: formData.name,
           yes_no_answer: formData.yesNoAnswer,
-          multiple_choice_answers: formData.multipleChoiceAnswers
+          multiple_choice_answers: formData.yesNoAnswer ? formData.multipleChoiceAnswers : null
         });
 
       if (error) {
         throw error;
       }
-
-      // HubSpot integration can be added here if needed
 
       console.log('Form submitted successfully:', data);
       setCurrentStep(6); // Move to the end screen
@@ -82,12 +80,17 @@ export default function Home() {
     }
   };
 
+  const handleYesNoSubmit = async (answer: boolean) => {
+    updateFormData("yesNoAnswer", answer);
+    await handleSubmit();
+  };
+
   const renderStep = () => {
     switch (currentStep) {
       case 0:
         return <InitialForm formData={formData} updateFormData={updateFormData} onNext={handleNext} />;
       case 1:
-        return <YesNoQuestion updateFormData={updateFormData} onNext={handleNext} onBack={handleBack} />;
+        return <YesNoQuestion updateFormData={updateFormData} onNext={handleNext} onBack={handleBack} onSubmit={handleYesNoSubmit} />;
       case 2:
       case 3:
       case 4:
@@ -102,17 +105,23 @@ export default function Home() {
           />
         );
       case 6:
-        return <EndScreen />;
+        return <EndScreen formData={formData} />;
       default:
         return null;
     }
   };
 
   return (
-    <div className="min-h-screen p-8">
-      <ProgressBar currentStep={currentStep} totalSteps={7} />
-      {renderStep()}
-      <DynamicSupabaseComponent />
-    </div>
+    <>
+      <div className="w-full">
+        <ProgressBar currentStep={currentStep} totalSteps={7} />
+      </div>
+      <div className="flex-grow flex items-center justify-center p-8">
+        <div className="w-full max-w-md">
+          {renderStep()}
+          <DynamicSupabaseComponent />
+        </div>
+      </div>
+    </>
   );
 }
