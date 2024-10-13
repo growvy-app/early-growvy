@@ -6,6 +6,14 @@ import InitialForm from "../components/InitialForm";
 import YesNoQuestion from "../components/YesNoQuestion";
 import MultipleChoiceQuestion from "../components/MultipleChoiceQuestion";
 import EndScreen from "../components/EndScreen";
+import { getSupabase } from '../lib/supabase';
+import { sanitizeInput } from '../utils/sanitize';
+import dynamic from 'next/dynamic';
+
+const DynamicSupabaseComponent = dynamic(
+  () => import('../components/SupabaseComponent'),
+  { ssr: false }
+);
 
 export type FormData = {
   email: string;
@@ -46,9 +54,26 @@ export default function Home() {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleSubmit = () => {
-    console.log("Form submitted:", formData);
-    setCurrentStep(6);
+  const handleSubmit = async () => {
+    try {
+      const supabase = getSupabase();
+      const { data, error } = await supabase
+        .from('survey_responses')
+        .insert({
+          email: sanitizeInput(formData.email),
+          name: sanitizeInput(formData.name),
+          yes_no_answer: formData.yesNoAnswer,
+          multiple_choice_answers: formData.multipleChoiceAnswers.map(sanitizeInput)
+        });
+
+      if (error) throw error;
+
+      console.log('Form submitted successfully:', data);
+      setCurrentStep(6); // Move to the end screen
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('There was an error submitting your form. Please try again.');
+    }
   };
 
   const renderStep = () => {
@@ -81,6 +106,7 @@ export default function Home() {
     <div className="min-h-screen p-8">
       <ProgressBar currentStep={currentStep} totalSteps={7} />
       {renderStep()}
+      <DynamicSupabaseComponent />
     </div>
   );
 }

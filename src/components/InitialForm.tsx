@@ -10,7 +10,20 @@ interface InitialFormProps {
 const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onNext }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onNext();
+    if (isValidEmail(formData.email) && isValidName(formData.name)) {
+      onNext();
+    } else {
+      alert("Please enter a valid email and name.");
+    }
+  };
+
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const isValidName = (name: string): boolean => {
+    return name.length >= 2 && name.length <= 50;
   };
 
   return (
@@ -22,9 +35,10 @@ const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onN
           type="email"
           id="email"
           value={formData.email}
-          onChange={(e) => updateFormData("email", e.target.value)}
+          onChange={(e) => updateFormData("email", e.target.value.trim())}
           required
           className="w-full p-2 border rounded"
+          maxLength={100}
         />
       </div>
       <div>
@@ -33,9 +47,10 @@ const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onN
           type="text"
           id="name"
           value={formData.name}
-          onChange={(e) => updateFormData("name", e.target.value)}
+          onChange={(e) => updateFormData("name", e.target.value.trim())}
           required
           className="w-full p-2 border rounded"
+          maxLength={50}
         />
       </div>
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
