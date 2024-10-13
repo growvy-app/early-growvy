@@ -7,7 +7,7 @@ import YesNoQuestion from "../components/YesNoQuestion";
 import MultipleChoiceQuestion from "../components/MultipleChoiceQuestion";
 import EndScreen from "../components/EndScreen";
 
-type FormData = {
+export type FormData = {
   email: string;
   name: string;
   yesNoAnswer: boolean | null;
@@ -42,12 +42,11 @@ export default function Home() {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const updateFormData = (key: keyof FormData, value: FormData[keyof FormData]) => {
+  const updateFormData = <K extends keyof FormData>(key: K, value: FormData[K]) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = () => {
-    // For now, we'll just log the form data and move to the end screen
     console.log("Form submitted:", formData);
     setCurrentStep(6);
   };

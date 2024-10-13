@@ -1,15 +1,14 @@
 import React from "react";
+import { FormData } from "../app/page";
 
 interface YesNoQuestionProps {
-  formData: {
-    yesNoAnswer: boolean | null;
-  };
-  updateFormData: (key: string, value: boolean) => void;
+  formData: FormData;
+  updateFormData: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
   onNext: () => void;
   onBack: () => void;
 }
 
-const YesNoQuestion: React.FC<YesNoQuestionProps> = ({ updateFormData, onNext, onBack }) => {
+const YesNoQuestion: React.FC<YesNoQuestionProps> = ({ formData, updateFormData, onNext, onBack }) => {
   const handleAnswer = (answer: boolean) => {
     updateFormData("yesNoAnswer", answer);
     if (answer) {

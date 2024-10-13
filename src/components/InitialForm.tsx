@@ -1,11 +1,9 @@
 import React from "react";
+import { FormData } from "../app/page";
 
 interface InitialFormProps {
-  formData: {
-    email: string;
-    name: string;
-  };
-  updateFormData: (key: string, value: string) => void;
+  formData: FormData;
+  updateFormData: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
   onNext: () => void;
 }
 
