@@ -6,8 +6,6 @@ import InitialForm from "../components/InitialForm";
 import YesNoQuestion from "../components/YesNoQuestion";
 import MultipleChoiceQuestion from "../components/MultipleChoiceQuestion";
 import EndScreen from "../components/EndScreen";
-import { supabase } from "../lib/supabase";
-import { createOrUpdateContact } from "../lib/hubspot";
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -37,32 +35,14 @@ export default function Home() {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const updateFormData = (key, value) => {
+  const updateFormData = (key: string, value: any) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
-  const handleSubmit = async () => {
-    try {
-      // Save to Supabase
-      const { error } = await supabase
-        .from("survey_responses")
-        .insert({
-          email: formData.email,
-          name: formData.name,
-          yes_no_answer: formData.yesNoAnswer,
-          multiple_choice_answers: formData.multipleChoiceAnswers,
-        });
-
-      if (error) throw error;
-
-      // Create or update HubSpot contact
-      await createOrUpdateContact(formData.email, formData.name);
-
-      // Move to the end screen
-      setCurrentStep(6);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
+  const handleSubmit = () => {
+    // For now, we'll just log the form data and move to the end screen
+    console.log("Form submitted:", formData);
+    setCurrentStep(6);
   };
 
   const renderStep = () => {
@@ -80,7 +60,7 @@ export default function Home() {
             questionNumber={currentStep - 1}
             formData={formData}
             updateFormData={updateFormData}
-            onNext={handleSubmit}
+            onNext={currentStep === 5 ? handleSubmit : handleNext}
             onBack={handleBack}
           />
         );
