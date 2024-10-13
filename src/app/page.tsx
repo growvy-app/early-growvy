@@ -7,9 +7,16 @@ import YesNoQuestion from "../components/YesNoQuestion";
 import MultipleChoiceQuestion from "../components/MultipleChoiceQuestion";
 import EndScreen from "../components/EndScreen";
 
+type FormData = {
+  email: string;
+  name: string;
+  yesNoAnswer: boolean | null;
+  multipleChoiceAnswers: string[];
+};
+
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     email: "",
     name: "",
     yesNoAnswer: null,
@@ -35,7 +42,7 @@ export default function Home() {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const updateFormData = (key: string, value: any) => {
+  const updateFormData = (key: keyof FormData, value: FormData[keyof FormData]) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
