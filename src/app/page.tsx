@@ -56,7 +56,7 @@ export default function Home() {
       case 0:
         return <InitialForm formData={formData} updateFormData={updateFormData} onNext={handleNext} />;
       case 1:
-        return <YesNoQuestion formData={formData} updateFormData={updateFormData} onNext={handleNext} onBack={handleBack} />;
+        return <YesNoQuestion updateFormData={updateFormData} onNext={handleNext} onBack={handleBack} />;
       case 2:
       case 3:
       case 4:
