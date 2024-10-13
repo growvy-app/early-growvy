@@ -7,9 +7,19 @@ import dynamic from 'next/dynamic';
 const DynamicErrorBoundary = dynamic(() => import('@/components/ErrorBoundary'), { ssr: false });
 
 const zainFont = localFont({
-  src: "./fonts/Zain-Regular.ttf",
+  src: [
+    {
+      path: "./fonts/Zain-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/Zain-Bold.ttf",  // Make sure this file exists
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-zain",
-  weight: "400",
   display: "swap",
 });
 

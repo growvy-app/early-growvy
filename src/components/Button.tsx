@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({
   children,
   className = '',
 }) => {
-  const baseStyle = "relative py-4 px-12 font-medium text-xl rounded-xl transition-all duration-200";
+  const baseStyle = "relative py-3.5 px-10 font-medium text-lg rounded-lg transition-all duration-200";
   const primaryStyle = "text-white hover:opacity-90";
   const disabledStyle = "text-gray-500 cursor-not-allowed";
 

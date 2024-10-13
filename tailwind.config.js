@@ -23,6 +23,12 @@ module.exports = {
             minHeight: {
                 '12': '3rem',
             },
+            fontWeight: {
+                normal: 400,
+                bold: 700,
+                extrabold: 800,
+                black: 900,
+            },
         },
     },
     plugins: [],
