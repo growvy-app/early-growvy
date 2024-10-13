@@ -3,10 +3,13 @@ import { getSupabase } from '../lib/supabase';
 
 export default function SupabaseComponent() {
   useEffect(() => {
-    // Initialize Supabase client here if needed
     try {
-      getSupabase();
-      console.log('Supabase client initialized successfully');
+      const supabase = getSupabase();
+      if (supabase) {
+        console.log('Supabase client initialized successfully');
+      } else {
+        console.warn('Supabase client is null. Check your environment variables.');
+      }
     } catch (error) {
       console.error('Failed to initialize Supabase client:', error);
     }

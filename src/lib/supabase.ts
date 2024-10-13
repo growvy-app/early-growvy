@@ -9,7 +9,8 @@ export const supabase = supabaseUrl && supabaseAnonKey
 
 export function getSupabase() {
   if (!supabase) {
-    throw new Error('Supabase client not initialized. Missing environment variables.')
+    console.warn('Supabase client not initialized. Check your environment variables.')
+    return null
   }
   return supabase
 }

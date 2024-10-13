@@ -7,7 +7,6 @@ import YesNoQuestion from "../components/YesNoQuestion";
 import MultipleChoiceQuestion from "../components/MultipleChoiceQuestion";
 import EndScreen from "../components/EndScreen";
 import { getSupabase } from '../lib/supabase';
-import { sanitizeInput } from '../utils/sanitize';
 import dynamic from 'next/dynamic';
 
 const DynamicSupabaseComponent = dynamic(
@@ -21,6 +20,16 @@ export type FormData = {
   yesNoAnswer: boolean | null;
   multipleChoiceAnswers: string[];
 };
+
+function sanitizeInput(input: string): string {
+  // Remove any HTML tags
+  let sanitized = input.replace(/<[^>]*>?/gm, '');
+  
+  // Encode special characters
+  sanitized = encodeURIComponent(sanitized);
+  
+  return sanitized;
+}
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -57,22 +66,30 @@ export default function Home() {
   const handleSubmit = async () => {
     try {
       const supabase = getSupabase();
+      if (!supabase) {
+        throw new Error('Supabase client not initialized');
+      }
       const { data, error } = await supabase
         .from('survey_responses')
         .insert({
-          email: sanitizeInput(formData.email),
-          name: sanitizeInput(formData.name),
+          email: formData.email,
+          name: formData.name,
           yes_no_answer: formData.yesNoAnswer,
-          multiple_choice_answers: formData.multipleChoiceAnswers.map(sanitizeInput)
+          multiple_choice_answers: formData.multipleChoiceAnswers
         });
 
-      if (error) throw error;
+      if (error) {
+        if (error.code === '42501') {
+          throw new Error('Permission denied. Please check your Supabase RLS policies.');
+        }
+        throw error;
+      }
 
       console.log('Form submitted successfully:', data);
       setCurrentStep(6); // Move to the end screen
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting form:', error);
-      alert('There was an error submitting your form. Please try again.');
+      alert(`There was an error submitting your form: ${error.message || 'Unknown error'}`);
     }
   };
 
