@@ -21,16 +21,6 @@ export type FormData = {
   multipleChoiceAnswers: string[];
 };
 
-function sanitizeInput(input: string): string {
-  // Remove any HTML tags
-  let sanitized = input.replace(/<[^>]*>?/gm, '');
-  
-  // Encode special characters
-  sanitized = encodeURIComponent(sanitized);
-  
-  return sanitized;
-}
-
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
@@ -87,9 +77,9 @@ export default function Home() {
 
       console.log('Form submitted successfully:', data);
       setCurrentStep(6); // Move to the end screen
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error submitting form:', error);
-      alert(`There was an error submitting your form: ${error.message || 'Unknown error'}`);
+      alert(`There was an error submitting your form: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   };
 
