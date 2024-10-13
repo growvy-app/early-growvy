@@ -31,8 +31,8 @@ const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onN
   return (
     <form onSubmit={handleSubmit} className="space-y-8 max-w-md mx-auto">
       <div className="space-y-1">
-        <h1 className="title-gradient text-6xl font-bold leading-[1.1]">
-          Be First and don't Miss Out.
+        <h1 className="title-gradient text-6xl font-bold leading-[1.1] mb-2">
+          Be First and don&apos;t Miss Out.
         </h1>
         <p className="text-xl">Join the waiting list to be among the first to try out Growvy!</p>
       </div>

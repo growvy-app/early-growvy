@@ -6,7 +6,8 @@ export async function POST(request: Request) {
     const { email, name } = await request.json();
     const result = await createOrUpdateContact(email, name);
     return NextResponse.json({ success: true, result });
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error('Error creating or updating HubSpot contact:', error);
     return NextResponse.json({ success: false, error: 'Error creating or updating HubSpot contact' }, { status: 500 });
   }
 }
