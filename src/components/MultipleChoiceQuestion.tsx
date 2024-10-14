@@ -67,11 +67,12 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
         ))}
       </div>
       <div className="flex space-x-4">
-      <button className="absolute -top-8 left-0 text-lg font-sans" onClick={onBack}>Back</button>
         <Button type="submit">
           {questionNumber === 4 ? "Submit" : "Next"}
         </Button>
       </div>
+      <button className="absolute -top-14 left-0 text-lg font-sans" onClick={onBack}>Back</button>
+
     </form>
   );
 };

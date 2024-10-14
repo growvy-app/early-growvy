@@ -12,10 +12,7 @@ module.exports = {
                 zain: ['var(--font-zain)', 'Arial', 'sans-serif'],
             },
             backgroundImage: {
-                'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-                'gradient-conic':
-                    'conic-gradient(from 90deg at 50% 50%, var(--tw-gradient-stops))',
-                'primary-gradient': 'linear-gradient(133deg, #A251FF 7.24%, #A251FF 8.44%, #5081FE 125.9%)',
+                'primary-gradient': 'linear-gradient(135deg, #A251FF 7.24%, #A251FF 8.44%, #5081FE 125.9%)',
             },
             borderRadius: {
                 'custom': '0.625rem',

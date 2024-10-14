@@ -43,5 +43,8 @@ h1, h2, h3, h4, h5, h6 {
   .title-gradient {
     @apply text-3xl font-bold bg-clip-text text-transparent bg-primary-gradient;
   }
-}
 
+  .bg-primary-gradient {
+    @apply transition-opacity duration-200;
+  }
+}
