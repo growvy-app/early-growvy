@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${zainFont.variable} ${afacad.variable} font-sans antialiased min-h-screen flex flex-col`}
+        className={`${zainFont.variable} ${afacad.variable} font-sans antialiased h-svh flex flex-col`}
       >
         <DynamicErrorBoundary>
           <main className="flex-grow flex flex-col">
