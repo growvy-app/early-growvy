@@ -14,7 +14,7 @@ module.exports = {
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic':
-                    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+                    'conic-gradient(from 90deg at 50% 50%, var(--tw-gradient-stops))',
                 'primary-gradient': 'linear-gradient(133deg, #A251FF 7.24%, #A251FF 8.44%, #5081FE 125.9%)',
             },
             borderRadius: {
@@ -29,6 +29,12 @@ module.exports = {
                 extrabold: 800,
                 black: 900,
             },
+            colors: {
+                neutral: {
+                    DEFAULT: 'var(--neutral-100)',
+                    100: 'var(--neutral-100)',
+                }
+            }
         },
     },
     plugins: [],

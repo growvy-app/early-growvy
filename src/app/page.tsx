@@ -117,7 +117,7 @@ export default function Home() {
         <ProgressBar currentStep={currentStep} totalSteps={7} />
       </div>
       <div className="flex-grow flex items-center justify-center p-8">
-        <div className="w-full max-w-md scale-90">
+        <div className="w-full max-w-3xl">
           {renderStep()}
           <DynamicSupabaseComponent />
         </div>

@@ -1,26 +1,17 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Afacad } from 'next/font/google';
-import "./globals.css";
+import { Zain, Afacad } from 'next/font/google';
+import "./globals.css";  // Make sure this import is present and correct
 import dynamic from 'next/dynamic';
+import Image from "next/image";
+import bgGrowvy from "@/assets/bg-growvy.png"
 
 const DynamicErrorBoundary = dynamic(() => import('@/components/ErrorBoundary'), { ssr: false });
 
-const zainFont = localFont({
-  src: [
-    {
-      path: "./fonts/Zain-Regular.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./fonts/Zain-Bold.ttf",  // Make sure this file exists
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  variable: "--font-zain",
-  display: "swap",
+const zainFont = Zain({
+  subsets: ['latin'],
+  variable: '--font-zain',
+  display: 'swap',
+  weight: ['400', '700'],
 });
 
 const afacad = Afacad({
@@ -47,6 +38,7 @@ export default function RootLayout({
       >
         <DynamicErrorBoundary>
           <main className="flex-grow flex flex-col">
+            <Image src={bgGrowvy} alt="Growvy background" className="absolute inset-0 w-full -z-50 h-full object-cover" />
             {children}
           </main>
         </DynamicErrorBoundary>

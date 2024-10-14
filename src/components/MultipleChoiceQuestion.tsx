@@ -43,8 +43,10 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <h2 className="title-gradient text-5xl font-bold mb-8">{questions[questionNumber - 1]}</h2>
+    <form onSubmit={handleSubmit} className="space-y-6 relative">
+      <div className="space-y-1">
+      <h2 className="title-gradient text-6xl leading-[0.9] mb-2">{questions[questionNumber - 1]}</h2>
+      </div>
       <div className="space-y-4">
         {options[questionNumber - 1].map((option, index) => (
           <div key={index} className="flex items-center">
@@ -65,9 +67,7 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
         ))}
       </div>
       <div className="flex space-x-4">
-        <Button onClick={onBack} type="button">
-          Back
-        </Button>
+      <button className="absolute -top-8 left-0 text-lg font-sans" onClick={onBack}>Back</button>
         <Button type="submit">
           {questionNumber === 4 ? "Submit" : "Next"}
         </Button>

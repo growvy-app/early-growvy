@@ -29,14 +29,14 @@ const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onN
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-7 max-w-sm mx-auto">
+    <form onSubmit={handleSubmit} className="space-y-7 w-full mx-auto">
       <div className="space-y-1">
-        <h1 className="title-gradient text-6xl leading-[1.1] mb-2" style={{ fontWeight: 900 }}>
+        <h1 className="title-gradient text-6xl leading-[0.9] mb-2" style={{ fontWeight: 900 }}>
           Be First and don&apos;t Miss Out.
         </h1>
         <p className="text-xl">Join the waiting list to be among the first to try out Growvy!</p>
       </div>
-      <div className="space-y-3.5 flex flex-col">
+      <div className="space-y-3.5 flex flex-col gap-2">
         <Input
           id="name"
           label="First Name"
