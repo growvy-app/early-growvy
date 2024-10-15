@@ -7,9 +7,10 @@ interface InitialFormProps {
   formData: FormData;
   updateFormData: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
   onNext: () => void;
+  onBack: () => void;
 }
 
-const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onNext }) => {
+const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onNext, onBack }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isValidEmail(formData.email) && isValidName(formData.name)) {
@@ -29,7 +30,7 @@ const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onN
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-7 w-full mx-auto">
+    <form onSubmit={handleSubmit} className="space-y-7 w-full mx-auto relative">
       <div className="space-y-1">
         <h1 className="title-gradient text-6xl leading-[0.9] mb-2" style={{ fontWeight: 900 }}>
           Be First and don&apos;t Miss Out.
@@ -58,12 +59,11 @@ const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onN
           placeholder="fred@growvy.app"
         />
       </div>
-      <Button 
-        type="submit" 
-        disabled={!isValidEmail(formData.email) || !isValidName(formData.name)}
-      >
-        Continue
-      </Button>
+      <div className="flex space-x-4">
+        <Button type="submit" disabled={!isValidEmail(formData.email) || !isValidName(formData.name)}>
+          Continue
+        </Button>
+      </div>
     </form>
   );
 };

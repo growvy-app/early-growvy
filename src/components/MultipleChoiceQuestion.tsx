@@ -1,6 +1,7 @@
 import React from "react";
 import { FormData } from "../app/page";
 import Button from "./Button";
+import CustomCheckbox from "./CustomCheckbox";
 
 interface MultipleChoiceQuestionProps {
   questionNumber: number;
@@ -31,9 +32,9 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
     ["$5/month", "$8/month", "$12/month", "$16/month"],
   ];
 
-  const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleOptionChange = (selectedOption: string) => {
     const newAnswers = [...formData.multipleChoiceAnswers];
-    newAnswers[questionNumber - 1] = e.target.value;
+    newAnswers[questionNumber - 1] = selectedOption;
     updateFormData("multipleChoiceAnswers", newAnswers);
   };
 
@@ -45,25 +46,18 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-6 relative">
       <div className="space-y-1">
-      <h2 className="title-gradient text-6xl leading-[0.9] mb-2">{questions[questionNumber - 1]}</h2>
+        <h2 className="title-gradient text-6xl leading-[0.9] mb-2">{questions[questionNumber - 1]}</h2>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-2">
         {options[questionNumber - 1].map((option, index) => (
-          <div key={index} className="flex items-center">
-            <input
-              type="radio"
-              id={`option-${index}`}
-              name={`question-${questionNumber}`}
-              value={option}
-              checked={formData.multipleChoiceAnswers[questionNumber - 1] === option}
-              onChange={handleOptionChange}
-              required
-              className="mr-2"
-            />
-            <label htmlFor={`option-${index}`} className="text-lg">
-              {option}
-            </label>
-          </div>
+          <CustomCheckbox
+            key={index}
+            id={`option-${index}`}
+            label={option}
+            checked={formData.multipleChoiceAnswers[questionNumber - 1] === option}
+            onChange={() => handleOptionChange(option)}
+            required
+          />
         ))}
       </div>
       <div className="flex space-x-4">
@@ -71,8 +65,13 @@ const MultipleChoiceQuestion: React.FC<MultipleChoiceQuestionProps> = ({
           {questionNumber === 4 ? "Submit" : "Next"}
         </Button>
       </div>
-      <button className="absolute -top-14 left-0 text-lg font-sans" onClick={onBack}>Back</button>
-
+      <button 
+        type="button"
+        className="absolute -top-14 left-0 text-lg font-sans text-neutral-700" 
+        onClick={onBack}
+      >
+        Back
+      </button>
     </form>
   );
 };

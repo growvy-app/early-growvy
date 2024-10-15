@@ -9,11 +9,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        neutral: {
+          50: "#FAFAFA",
+          300: "#E4E4E4",
+          500: "#B1AFBE",
+          700: "#565B68",
+          900: "#0F172A",
+        },
+        primary: "#786AFE",
+      },
+      backgroundImage: {
+        'primary-gradient': 'linear-gradient(135deg, #A251FF 7.24%, #A251FF 8.44%, #5081FE 125.9%)',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }: { addUtilities: Function }) {
+      const newUtilities = {
+        '.gradient-border': {
+          'background-image': 'linear-gradient(135deg, #A251FF 7.24%, #A251FF 8.44%, #5081FE 125.9%)',
+          'background-origin': 'border-box',
+          'background-clip': 'padding-box, border-box',
+        },
+      }
+      addUtilities(newUtilities, ['responsive', 'hover'])
+    },
+  ],
 };
+
 export default config;

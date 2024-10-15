@@ -3,16 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --background: #fafafa;
-  --foreground: #171717;
-
-  --neutral-100: #fafafa;
+  --background: theme('colors.neutral.50');
+  --foreground: theme('colors.neutral.900');
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: theme('colors.neutral.900');
+    --foreground: theme('colors.neutral.50');
   }
 }
 
@@ -31,13 +29,14 @@ h1, h2, h3, h4, h5, h6 {
     text-wrap: balance;
   }
 }
+
 @layer components {
   .btn-primary {
-    @apply rounded-custom border border-slate-900/20 bg-primary-gradient flex min-h-12 px-8 py-3 justify-center items-center gap-2 text-white;
+    @apply rounded-custom border border-slate-900/20 bg-primary-gradient flex min-h-12 px-8 py-3 justify-center items-center gap-2 text-neutral-50;
   }
   
   .btn-primary:disabled {
-    @apply bg-none bg-[#E4E4E4] text-gray-500 cursor-not-allowed;
+    @apply bg-none bg-neutral-300 text-neutral-500 cursor-not-allowed;
   }
 
   .title-gradient {
