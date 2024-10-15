@@ -89,7 +89,7 @@ export default function Home() {
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return <InitialForm formData={formData} updateFormData={updateFormData} onNext={handleNext} onBack={handleBack} />;
+        return <InitialForm formData={formData} updateFormData={updateFormData} onNext={handleNext} />;
       case 1:
         return <YesNoQuestion updateFormData={updateFormData} onNext={handleNext} onBack={handleBack} onSubmit={handleYesNoSubmit} />;
       case 2:
@@ -114,7 +114,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full absolute top-0 left-0 right-0 z-50">
         <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
       </div>
       <div className="flex-grow flex items-center h-svh justify-center p-8">

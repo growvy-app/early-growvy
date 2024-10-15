@@ -7,10 +7,9 @@ interface InitialFormProps {
   formData: FormData;
   updateFormData: <K extends keyof FormData>(key: K, value: FormData[K]) => void;
   onNext: () => void;
-  onBack: () => void;
 }
 
-const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onNext, onBack }) => {
+const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onNext }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isValidEmail(formData.email) && isValidName(formData.name)) {
