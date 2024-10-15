@@ -29,7 +29,7 @@ const YesNoQuestion: React.FC<YesNoQuestionProps> = ({ updateFormData, onNext, o
         <Button onClick={() => handleAnswer(true)}>
           Yes
         </Button>
-        <Button onClick={() => handleAnswer(false)}>
+        <Button onClick={() => handleAnswer(false)} variant="secondary">
           No
         </Button>
       </div>
