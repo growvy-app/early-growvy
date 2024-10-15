@@ -8,7 +8,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const Input: React.FC<InputProps> = ({ label, required, className, ...props }) => {
   return (
     <div className="relative max-w-sm">
-      <label htmlFor={props.id} className="absolute -top-3 left-5 bg-neutral-50 px-2 text-sm font-medium text-neutral-500">
+      <label htmlFor={props.id} className="absolute -top-3 left-5 bg-neutral-50 rounded-md px-2 text-sm font-medium text-neutral-500">
         {label}{required && <span className="text-primary">*</span>}
       </label>
       <input
