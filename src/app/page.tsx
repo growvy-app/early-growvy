@@ -88,7 +88,7 @@ export default function Home() {
   const renderStep = () => {
     switch (currentStep) {
       case 0:
-        return <InitialForm formData={formData} updateFormData={updateFormData} onNext={handleNext} />;
+        return <InitialForm formData={formData} updateFormData={updateFormData} onNext={handleNext} onBack={handleBack} />;
       case 1:
         return <YesNoQuestion updateFormData={updateFormData} onNext={handleNext} onBack={handleBack} onSubmit={handleYesNoSubmit} />;
       case 2:
@@ -116,7 +116,7 @@ export default function Home() {
       <div className="w-full">
         <ProgressBar currentStep={currentStep} totalSteps={7} />
       </div>
-      <div className="flex-grow flex items-center justify-center p-8">
+      <div className="flex-grow flex items-center h-svh justify-center p-8">
         <div className="w-full max-w-3xl">
           {renderStep()}
           <DynamicSupabaseComponent />

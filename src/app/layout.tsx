@@ -32,16 +32,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${zainFont.variable} ${afacad.variable} font-sans antialiased h-svh flex flex-col`}
-      >
-        <DynamicErrorBoundary>
-          <main className="flex-grow flex flex-col">
-            <Image src={bgGrowvy} alt="Growvy background" className="absolute inset-0 w-full -z-50 h-full object-cover" />
-            {children}
-          </main>
-        </DynamicErrorBoundary>
+    <html lang="en" className={`${zainFont.variable} ${afacad.variable}`}>
+      <body className="font-sans antialiased">
+        {children}
       </body>
     </html>
   );

@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-afacad)', 'sans-serif'],
+        zain: ['var(--font-zain)', 'sans-serif'],
+      },
       colors: {
         neutral: {
           50: "#FAFAFA",
