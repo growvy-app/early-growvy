@@ -29,6 +29,7 @@ export default function Home() {
     yesNoAnswer: null,
     multipleChoiceAnswers: ["", "", "", ""],
   });
+  const totalSteps = 6; // Adjust this based on your total number of steps
 
   useEffect(() => {
     const savedData = localStorage.getItem("formData");
@@ -114,7 +115,7 @@ export default function Home() {
   return (
     <>
       <div className="w-full">
-        <ProgressBar currentStep={currentStep} totalSteps={7} />
+        <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
       </div>
       <div className="flex-grow flex items-center h-svh justify-center p-8">
         <div className="w-full max-w-3xl">

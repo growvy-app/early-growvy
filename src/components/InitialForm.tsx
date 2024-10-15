@@ -60,10 +60,23 @@ const InitialForm: React.FC<InitialFormProps> = ({ formData, updateFormData, onN
         />
       </div>
       <div className="flex space-x-4">
-        <Button type="submit" disabled={!isValidEmail(formData.email) || !isValidName(formData.name)}>
+        <Button 
+          type="submit" 
+          disabled={!isValidEmail(formData.email) || !isValidName(formData.name)}
+        >
           Continue
         </Button>
       </div>
+      <button 
+        type="button"
+        className="absolute -top-14 left-0 text-lg font-sans text-neutral-700 flex items-center" 
+        onClick={onBack}
+      >
+        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+        Back
+      </button>
     </form>
   );
 };
