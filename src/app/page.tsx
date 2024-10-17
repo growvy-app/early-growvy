@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import ProgressBar from "@/components/ProgressBar";
 import InitialForm from "@/components/InitialForm";
 import YesNoQuestion from "@/components/YesNoQuestion";
@@ -35,20 +35,21 @@ export default function Home() {
     localStorage.setItem("formData", JSON.stringify(formData));
   }, [formData]);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCurrentStep((prev) => prev + 1);
-  };
+  }, []);
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     setCurrentStep((prev) => prev - 1);
-  };
+  }, []);
 
-  const updateFormData = <K extends keyof FormData>(key: K, value: FormData[K]) => {
+  const updateFormData = useCallback(<K extends keyof FormData>(key: K, value: FormData[K]) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
-  };
+  }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     try {
+      console.log('Submitting form data:', JSON.stringify(formData, null, 2));
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: {
@@ -57,24 +58,32 @@ export default function Home() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+      console.log('Server response:', JSON.stringify(data, null, 2));
+
       if (!response.ok) {
-        throw new Error('Failed to submit form');
+        throw new Error(data.message || data.error || 'Failed to submit form');
       }
 
-      console.log('Form submitted successfully');
+      console.log('Form submitted successfully:', data);
       setCurrentStep(6); // Move to the end screen
     } catch (error: unknown) {
       console.error('Error submitting form:', error);
+      if (error instanceof Error) {
+        console.error('Error name:', error.name);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+      }
       alert(`There was an error submitting your form: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
-  };
+  }, [formData]);
 
-  const handleYesNoSubmit = async (answer: boolean) => {
+  const handleYesNoSubmit = useCallback(async (answer: boolean) => {
     updateFormData("yesNoAnswer", answer);
     await handleSubmit();
-  };
+  }, [updateFormData, handleSubmit]);
 
-  const renderStep = () => {
+  const renderStep = useMemo(() => {
     switch (currentStep) {
       case 0:
         return <InitialForm formData={formData} updateFormData={updateFormData} onNext={handleNext} />;
@@ -98,7 +107,7 @@ export default function Home() {
       default:
         return null;
     }
-  };
+  }, [currentStep, formData, updateFormData, handleNext, handleBack, handleSubmit, handleYesNoSubmit]);
 
   return (
     <>
@@ -107,7 +116,7 @@ export default function Home() {
       </div>
       <div className="flex-grow flex items-center h-svh justify-center p-8">
         <div className="w-full max-w-3xl">
-          {renderStep()}
+          {renderStep}
         </div>
       </div>
     </>
