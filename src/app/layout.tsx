@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import localFont from 'next/font/local';
 import { Afacad } from 'next/font/google';
 import "./globals.css";
-import dynamic from 'next/dynamic';
-
-const DynamicErrorBoundary = dynamic(() => import('@/components/ErrorBoundary'), { ssr: false });
 
 const zainFont = localFont({
   src: [
@@ -43,9 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${zainFont.variable} ${afacad.variable}`}>
       <body className="font-sans antialiased">
-        <DynamicErrorBoundary>
-          {children}
-        </DynamicErrorBoundary>
+        {children}
       </body>
     </html>
   );
