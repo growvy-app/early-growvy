@@ -21,11 +21,12 @@ export async function POST(request: Request) {
     console.log('Contact added to Brevo successfully');
 
     return NextResponse.json({ message: 'Form submitted successfully' }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Detailed error in submit-form route:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json({ 
       message: 'Error submitting form', 
-      error: error.message || 'Unknown error'
+      error: errorMessage
     }, { status: 500 });
   }
 }
