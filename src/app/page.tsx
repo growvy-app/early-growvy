@@ -6,13 +6,6 @@ import InitialForm from "@/components/InitialForm";
 import YesNoQuestion from "@/components/YesNoQuestion";
 import MultipleChoiceQuestion from "@/components/MultipleChoiceQuestion";
 import EndScreen from "@/components/EndScreen";
-import { getSupabase } from '@/lib/supabase';
-import dynamic from 'next/dynamic';
-
-const DynamicSupabaseComponent = dynamic(
-  () => import('@/components/SupabaseComponent'),
-  { ssr: false }
-);
 
 export type FormData = {
   email: string;
@@ -29,7 +22,7 @@ export default function Home() {
     yesNoAnswer: null,
     multipleChoiceAnswers: ["", "", "", ""],
   });
-  const totalSteps = 6; // Adjust this based on your total number of steps
+  const totalSteps = 6;
 
   useEffect(() => {
     const savedData = localStorage.getItem("formData");
@@ -56,24 +49,19 @@ export default function Home() {
 
   const handleSubmit = async () => {
     try {
-      const supabase = getSupabase();
-      if (!supabase) {
-        throw new Error('Supabase client not initialized');
-      }
-      const { data, error } = await supabase
-        .from('survey_responses')
-        .insert({
-          email: formData.email,
-          name: formData.name,
-          yes_no_answer: formData.yesNoAnswer,
-          multiple_choice_answers: formData.yesNoAnswer ? formData.multipleChoiceAnswers : null
-        });
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-      if (error) {
-        throw error;
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
       }
 
-      console.log('Form submitted successfully:', data);
+      console.log('Form submitted successfully');
       setCurrentStep(6); // Move to the end screen
     } catch (error: unknown) {
       console.error('Error submitting form:', error);
@@ -120,7 +108,6 @@ export default function Home() {
       <div className="flex-grow flex items-center h-svh justify-center p-8">
         <div className="w-full max-w-3xl">
           {renderStep()}
-          <DynamicSupabaseComponent />
         </div>
       </div>
     </>
